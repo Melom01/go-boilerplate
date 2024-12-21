@@ -28,7 +28,8 @@ This project uses the current technologies stack:
 ```
 .
 ├── cmd                             # Entry point for applications
-│   └── main.go                     # Main application code
+│   ├── app                         # Main application code
+│   └── migrations                  # Database migrations
 ├── pkg                             # Application logic
 │   ├── api                         # API module
 │   │   ├── handler                 # API handlers
@@ -53,7 +54,8 @@ This project uses the current technologies stack:
 
 | Directory           | Description                               |
 |---------------------|-------------------------------------------|
-| `cmd`               | Entry points for running the application. |
+| `cmd/app`           | Entry points for running the application. |
+| `cmd/migrations`    | Database migrations tasks.                |
 | `pkg/api`           | API handlers and middleware.              |
 | `pkg/config`        | Application configuration logic.          |
 | `pkg/db`            | Database models and connection logic.     |
@@ -129,6 +131,23 @@ go run cmd/migrations/main.go
 ```shell
 go test ./...
 ```
+
+### Sort imports
+#### Making the `sort_imports.sh` script executable
+
+Before running the script for the first time, you need to make it executable. You can do this by running the following command in your terminal:
+```shell
+chmod +x sort_imports.sh
+```
+This step is only required once.
+
+#### Running the script
+After making the script executable, you can sort all imports throughout the application by running:
+```shell
+./sort_imports.sh
+```
+The script will automatically process all Go files, excluding any specified patterns (e.g., files with `_gen.go` in the di folder).
+Once completed, you will see a confirmation message.
 
 ---
 
