@@ -4,10 +4,10 @@
 package di
 
 import (
+	"github.com/google/wire"
+
 	"github.com/Melom01/go-boilerplate/pkg/api"
 	"github.com/Melom01/go-boilerplate/pkg/config"
-
-	"github.com/google/wire"
 )
 
 func InitializeAppDependencies(cfg config.Configuration) (*api.ServerHttp, error) {
