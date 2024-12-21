@@ -18,8 +18,8 @@ This project uses the current technologies stack:
 - **PostgreSQL** as the database for robust and scalable data storage.
 - **Firebase** Authentication to manage user authentication and generate secure JWT access tokens.
 - **Wire** as dependency injection framework to promote clean architecture.
-- **Ready** to use example CRUD APIs
-- **Unit test** integration to ensure code reliability
+- Unit test integration to ensure code reliability
+- Ready to use example CRUD APIs
 
 ---
 
