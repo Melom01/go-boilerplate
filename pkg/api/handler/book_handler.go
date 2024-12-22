@@ -3,10 +3,10 @@ package handler
 import (
 	"net/http"
 
-	"github.com/Melom01/go-boilerplate/pkg/domain"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 
+	"github.com/Melom01/go-boilerplate/pkg/domain"
 	usecase "github.com/Melom01/go-boilerplate/pkg/usecase/interfaces"
 )
 

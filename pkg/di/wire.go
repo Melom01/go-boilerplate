@@ -4,14 +4,14 @@
 package di
 
 import (
-	"github.com/Melom01/go-boilerplate/pkg/api/handler"
-	"github.com/Melom01/go-boilerplate/pkg/usecase"
 	"github.com/google/wire"
 
 	"github.com/Melom01/go-boilerplate/pkg/api"
+	"github.com/Melom01/go-boilerplate/pkg/api/handler"
 	"github.com/Melom01/go-boilerplate/pkg/config"
 	"github.com/Melom01/go-boilerplate/pkg/db"
 	"github.com/Melom01/go-boilerplate/pkg/repository"
+	"github.com/Melom01/go-boilerplate/pkg/usecase"
 )
 
 func InitializeAppDependencies(cfg config.Configuration) (*api.ServerHttp, error) {

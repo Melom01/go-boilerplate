@@ -1,8 +1,6 @@
 package interfaces
 
-import (
-	"github.com/Melom01/go-boilerplate/pkg/domain"
-)
+import "github.com/Melom01/go-boilerplate/pkg/domain"
 
 type BookRepositoryInterface interface {
 	FindAll() ([]domain.Book, error)
