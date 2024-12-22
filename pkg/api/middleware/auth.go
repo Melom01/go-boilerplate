@@ -10,7 +10,7 @@ import (
 	"github.com/Melom01/go-boilerplate/pkg/config"
 )
 
-func ValidateTokenMiddleware(firebaseService *config.FirebaseService) gin.HandlerFunc {
+func ValidateToken(firebaseService *config.FirebaseService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		const bearerPrefix = "Bearer "

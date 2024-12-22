@@ -17,7 +17,7 @@ func NewServerHttp(firebaseService *config.FirebaseService, bookImpl *handler.Bo
 	engine.Use(gin.Logger())
 
 	api := engine.Group("/api")
-	api.Use(middleware.ValidateTokenMiddleware(firebaseService))
+	api.Use(middleware.ValidateToken(firebaseService))
 
 	api.GET("v1/books", bookImpl.FindAll)
 	api.POST("v1/books", bookImpl.AddNewBook)
