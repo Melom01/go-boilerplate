@@ -17,6 +17,7 @@ import (
 func InitializeAppDependencies(cfg config.Configuration) (*api.ServerHttp, error) {
 	wire.Build(
 		api.NewServerHttp,
+		config.CreateFirebaseService,
 		db.ConnectDatabase,
 		repository.CreateBookRepository,
 		usecase.CreateBookUseCase,

@@ -18,6 +18,10 @@ import (
 // Injectors from wire.go:
 
 func InitializeAppDependencies(cfg config.Configuration) (*api.ServerHttp, error) {
+	firebaseService, err := config.CreateFirebaseService(cfg)
+	if err != nil {
+		return nil, err
+	}
 	gormDB, err := db.ConnectDatabase(cfg)
 	if err != nil {
 		return nil, err
@@ -25,6 +29,6 @@ func InitializeAppDependencies(cfg config.Configuration) (*api.ServerHttp, error
 	bookRepositoryInterface := repository.CreateBookRepository(gormDB)
 	bookUseCaseInterface := usecase.CreateBookUseCase(bookRepositoryInterface)
 	bookHandler := handler.CreateBookHandler(bookUseCaseInterface)
-	serverHttp := api.NewServerHttp(bookHandler)
+	serverHttp := api.NewServerHttp(firebaseService, bookHandler)
 	return serverHttp, nil
 }
