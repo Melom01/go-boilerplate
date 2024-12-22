@@ -29,6 +29,6 @@ func InitializeAppDependencies(cfg config.Configuration) (*api.ServerHttp, error
 	bookRepositoryInterface := repository.CreateBookRepository(gormDB)
 	bookUseCaseInterface := usecase.CreateBookUseCase(bookRepositoryInterface)
 	bookHandler := handler.CreateBookHandler(bookUseCaseInterface)
-	serverHttp := api.NewServerHttp(firebaseService, bookHandler)
+	serverHttp := api.CreateServerHttp(firebaseService, bookHandler)
 	return serverHttp, nil
 }

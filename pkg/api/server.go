@@ -12,7 +12,7 @@ type ServerHttp struct {
 	engine *gin.Engine
 }
 
-func NewServerHttp(firebaseService *config.FirebaseService, bookImpl *handler.BookHandler) *ServerHttp {
+func CreateServerHttp(firebaseService *config.FirebaseService, bookImpl *handler.BookHandler) *ServerHttp {
 	engine := gin.New()
 	engine.Use(gin.Logger())
 
