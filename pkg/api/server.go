@@ -17,10 +17,13 @@ func CreateServerHttp(firebaseService *config.FirebaseService, bookImpl *handler
 	engine.Use(gin.Logger())
 
 	api := engine.Group("/api")
-	api.Use(middleware.ValidateToken(firebaseService))
-
-	api.GET("v1/books", bookImpl.FindAll)
-	api.POST("v1/books", bookImpl.AddNewBook)
+	{
+		api.Use(middleware.ValidateToken(firebaseService))
+		api.GET("v1/books", bookImpl.FindAll)
+		api.GET("v1/books/:id", bookImpl.FindById)
+		api.POST("v1/books", bookImpl.AddNewBook)
+		api.DELETE("v1/books/:id", bookImpl.DeleteBookById)
+	}
 
 	return &ServerHttp{engine: engine}
 }

@@ -36,7 +36,8 @@ func (c *bookDatabase) AddNewBook(book domain.Book) (domain.Book, error) {
 }
 
 func (c *bookDatabase) DeleteBookByID(id uint) error {
-	err := c.db.Delete(id).Error
+	var book domain.Book
+	err := c.db.Delete(&book, id).Error
 
 	return err
 }

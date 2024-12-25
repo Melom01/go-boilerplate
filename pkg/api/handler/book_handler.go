@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
@@ -25,12 +26,38 @@ func (h *BookHandler) FindAll(c *gin.Context) {
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	} else {
 		var response []domain.Book
-		copierErr := copier.Copy(&response, &books)
 
-		if copierErr != nil {
+		if copierErr := copier.Copy(&response, &books); copierErr != nil {
 			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		c.JSON(http.StatusOK, response)
+	}
+}
+
+func (h *BookHandler) FindById(c *gin.Context) {
+	idParam := c.Param("id")
+	id, parseErr := strconv.Atoi(idParam)
+
+	if parseErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "unable to parse book ID"})
+		return
+	} else {
+		var response domain.Book
+
+		book, findBookErr := h.bookUseCase.FindByID(uint(id))
+		if findBookErr != nil {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		if copierErr := copier.Copy(&response, &book); copierErr != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
 		}
 
 		c.JSON(http.StatusOK, response)
@@ -46,16 +73,33 @@ func (h *BookHandler) AddNewBook(c *gin.Context) {
 	}
 
 	book, err := h.bookUseCase.AddNewBook(book)
-
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
-	} else {
-		response := domain.Book{}
-		copierErr := copier.Copy(&response, &book)
-		if copierErr != nil {
-			c.AbortWithStatus(http.StatusInternalServerError)
-		}
-
-		c.JSON(http.StatusOK, response)
+		return
 	}
+
+	response := domain.Book{}
+	if copierErr := copier.Copy(&response, &book); copierErr != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *BookHandler) DeleteBookById(c *gin.Context) {
+	idParam := c.Param("id")
+	id, parseErr := strconv.Atoi(idParam)
+
+	if parseErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "unable to parse book ID"})
+		return
+	}
+
+	if deleteBookErr := h.bookUseCase.DeleteBookByID(uint(id)); deleteBookErr != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "book deleted successfully"})
 }
